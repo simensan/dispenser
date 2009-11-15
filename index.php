@@ -31,7 +31,6 @@ class FactoryReturnedClass {
 class FactoryClass {
 	
 	public static function getFactory($name) {
-		print nl2br("\n\n\n\n\n$name\n\n");
 		return new FactoryReturnedClass();
 	}
 	
@@ -41,7 +40,7 @@ class FactoryClass {
 $dispenser = new Dispenser_Builder();
 
 $dispenser->setVariable('test.config', 'TEST.CONFIG');
-echo $dispenser->getVariable('test.config');
+
 
 $dispenser	->register('RefClass2')
 			->setClass('PassByRefClass')
