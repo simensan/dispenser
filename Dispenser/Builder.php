@@ -210,6 +210,10 @@ class Dispenser_Builder {
     }
     
     
+    public function getComponents() {
+    	return $this->components;
+    }
+    
     /**
 	* Internal function that injects variable values / object references into arguments
 	*

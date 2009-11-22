@@ -1,4 +1,5 @@
 <?php
+/* Very rough and ugly examples. */ 
 
 include 'Dispenser/AutoLoader.php';
 
@@ -57,8 +58,7 @@ $dispenser	->register('Test')
 				new Dispenser_Element_Method(
 					'setSomeShit', 
 					array(
-						new Dispenser_Element_Reference('RefClass'), 
-						new Dispenser_Element_Variable('a.test')
+						new Dispenser_Element_Reference('RefClass')
 					)
 				)
 			)
@@ -89,15 +89,15 @@ $defs = array(
 	),
 	'RefClass2' => array(
 		'class' => 'PassByRefClass',
-		'shared' => 'true'
+		'shared' => true
 	),
 	'RefClass' => array(
 		'class' => 'PassByRefClass',
-		'shared' => 'true'
+		'shared' => true
 	),
 	'Test' => array(
 		'class' => 'Test',
-		'shared' => 'false',
+		'shared' => true,
 		'arguments' => array(
 			'blah'
 		),
@@ -106,10 +106,6 @@ $defs = array(
 				array(
 					'type' => 'reference',
 					'name' => 'RefClass'
-				),
-				array(
-					'type' => 'variable',
-					'name' => 'a.test'
 				)
 			),
 			'setSomeOtherShit' => array(
@@ -123,8 +119,6 @@ $defs = array(
 );
 
 $dispenser2 	= new Dispenser_Builder();
-$dispenser2->setVariables($loader->getVariables());
-$dispenser2->setVariable('test.config', 'TEST.CONFIG');
 $arrayLoader 	= new Dispenser_Importer_Array($defs);
 $dispenser2->load($arrayLoader);
 
@@ -132,4 +126,13 @@ $dispenser->getTest();
 
 $renderer = $dispenser->getRenderer();
 
+$exporter = new Dispenser_Exporter_Wrapper();
+$exporter->setClassName("BuiltDI");
+$exporter->load($dispenser2);
+file_put_contents("BuiltDI.php", $exporter->export());
+require_once "BuiltDI.php";
 
+
+$wrapped = new BuiltDI();
+$wrapped->setVariable('test.config', 'TEST.CONFIG');
+$wrapped->getTest();
