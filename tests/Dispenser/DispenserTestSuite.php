@@ -17,7 +17,7 @@ class DispenserTestSuite extends PHPUnit_Framework_TestSuite {
 	
 	public function __construct() {
 		$this->setName ('Dispenser Test Suite');
-						
+		chdir(dirname(__FILE__));	//Fix (hack?) for eclipse PHPUnit making getcwd() some eclipse dir
 		$this->addTestSuite ('Dispenser_Element_ComponentTest');
 		$this->addTestSuite ('Dispenser_BuilderTest');
 		$this->addTestSuite ('Dispenser_Importer_ArrayTest');

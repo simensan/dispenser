@@ -72,9 +72,12 @@ $dispenser	->register('Test')
 ;
 $dispenser	->register('Renderer')
 			->setClass('FactoryReturnedClass')
-			->setFactory(new Dispenser_Element_Factory('FactoryClass', 'getFactory'))
 			->addArgument('viewRenderer')
 			->setFactory(new Dispenser_Element_Factory('FactoryClass', 'getFactory'));
+			
+$dispenser->getTest();	
+$renderer = $dispenser->getRenderer();
+
 
 $defs = array(
 	'Renderer' => array(
@@ -118,15 +121,13 @@ $defs = array(
 	),
 );
 
+
 $dispenser2 	= new Dispenser_Builder();
 $arrayLoader 	= new Dispenser_Importer_Array($defs);
 $dispenser2->load($arrayLoader);
+var_dump($dispenser2->getComponents());
 
-$dispenser->getTest();	
-
-$renderer = $dispenser->getRenderer();
-
-$exporter = new Dispenser_Exporter_Wrapper();
+$exporter = new Dispenser_Exporter_Native();
 $exporter->setClassName("BuiltDI");
 $exporter->load($dispenser2);
 file_put_contents("BuiltDI.php", $exporter->export());

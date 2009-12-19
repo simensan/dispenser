@@ -37,7 +37,14 @@ class Dispenser_Importer_ArrayTest extends PHPUnit_Framework_TestCase {
 	/**
      * @expectedException Dispenser_Exception
      */
-	public function testAddArrayWithoutClassThrowException() {
+	public function testAddNonArrayThrowsException() {
+		$this->array->setArray(0);
+	}
+	
+	/**
+     * @expectedException Dispenser_Exception
+     */
+	public function testAddArrayWithoutClassThrowsException() {
 		$data = $this->getDefinitionWithoutClass();
 		$this->array->setArray($data);
 	}
@@ -53,10 +60,28 @@ class Dispenser_Importer_ArrayTest extends PHPUnit_Framework_TestCase {
 	/**
      * @expectedException Dispenser_Exception
      */
-	public function testAddArrayWithInvalidArgumentTypeThrowException() {
+	public function testAddArrayWithInvalidArgumentTypeThrowsException() {
 		$data = $this->getDefinitionWithInvalidArgumentType();
 		$this->array->setArray($data);	
 	}
+	
+	/**
+     * @expectedException Dispenser_Exception
+     */
+	public function testAddArrayWithNonArrayComponentThrowsException() {
+		$data = $this->getNonArrayComponent();
+		$this->array->setArray($data);
+	}
+	
+	/**
+     * @expectedException Dispenser_Exception
+     */
+	public function testAddArrayWithIllegalComponentKeyException() {
+		$data = $this->getIllegalComponentKey();
+		$this->array->setArray($data);
+	}
+	
+	
 	
 	/**
 	 * Tests array->getComponents()
@@ -65,32 +90,56 @@ class Dispenser_Importer_ArrayTest extends PHPUnit_Framework_TestCase {
 		$component = $this->array->getComponents();
 	}
 	
-	public function getDefinitionWithoutClass() {
+	private function getDefinitionWithoutClass() {
 		$data = array(
-			"Test" => array()
+			'Test' => array()
 		);	
 		
 		return $data;
 	}
 	
-	public function getDefinitionWithInvalidEntry() {
+	private function getDefinitionWithInvalidEntry() {
 		$data = array(
-			"unknownkey" => ""
+			'Test' => array(
+				'class' => 'MockClass',
+				'unknownkey' => ''
+			)
 		);	
 		
 		return $data;
 	}
 	
-	public function getDefinitionWithInvalidArgumentType() {
+	private function getDefinitionWithInvalidArgumentType() {
 		$data = array(
-			"arguments" => array("unknowntype" => "")
+			'Test' => array(
+				'class' => 'MockClass',
+				'arguments' => array(array('type' => 'unknowntype'))
+			)
 		);	
 		
 		return $data;
 	}
 	
+	private function getIllegalComponentKey() {
+		$data = array(
+			'Renderer' => array(
+				'class' => 'FactoryReturnedClass',
+				'Illegal Key' => ''
+			)
+		);
+
+		return $data;
+	}
 	
-	public function getBaseLegalData() {
+	private function getNonArrayComponent() {
+		$data = array(
+			'Renderer' => 'FactoryReturnedClass'
+		);
+
+		return $data;
+	}
+	
+	private function getBaseLegalData() {
 		$data = array(
 			'Renderer' => array(
 				'class' => 'FactoryReturnedClass',

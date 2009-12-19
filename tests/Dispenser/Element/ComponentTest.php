@@ -25,18 +25,12 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 		$this->component = new Dispenser_Element_Component();	
 	}
 	
-	/**
-	 * Tests component->__construct()
-	 */
 	public function test__construct() {
 		$this->component->__construct("Test");
 
 		return $this->component;
 	}
 
-	/**
-	 * Tests component->testSetId()
-	 */
 	public function testSetId() {
 		$this->component->setId("Test");
 		
@@ -44,7 +38,6 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * Tests component->getId()
 	 * @depends testSetId
 	 */
 	public function testGetId($component) {
@@ -52,7 +45,6 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * Tests component->setClass()
 	 * @depends testSetId
 	 */
 	public function testSetClass($component) {
@@ -62,7 +54,6 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * Tests component->getClass()
 	 * @depends testSetClass
 	 */
 	public function testGetClass($component) {
@@ -70,18 +61,13 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	
-	/**
-	 * Tests component->addArgument()
-	 */
 	public function testAddArgument() {
 		$this->component->addArgument("test");
 		
 		return $this->component;
 	}
+
 	
-	/**
-	 * Tests component->addArguments()
-	 */
 	public function testAddArguments() {
 		
 		$this->component->addArguments(
@@ -96,7 +82,6 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * Tests component->getArguments()
 	 * @depends testAddArguments
 	 */
 	public function testGetArguments($component) {
@@ -107,10 +92,8 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 		$this->assertType("Dispenser_Element_Reference", $arguments[1]);
 		$this->assertType("Dispenser_Element_Variable", $arguments[2]);		
 	}
+
 	
-	/**
-	 * Tests component->addMethod()
-	 */
 	public function testAddMethod() {
 		$this->component
 			->setClass("MockClass")		
@@ -118,9 +101,7 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 		
 	}
 	
-	/**
-	 * Tests component->addMethods()
-	 */
+	
 	public function testAddMethods() {
 		$this->component
 			->setClass("MockClass")
@@ -133,8 +114,8 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 		return $this->component;
 	}
 	
+	
 	/**
-	 * Tests component->getMethods()
 	 * @depends testAddMethods
 	 */
 	public function testGetMethods($component) {
@@ -145,34 +126,30 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 		$this->assertType("Dispenser_Element_Method", $methods[1]);
 	}
 	
-	/**
-	 * Tests component->setFactory()
-	 */
+	
 	public function testSetFactory() {
 		$this->component->setFactory(new Dispenser_Element_Factory("FactoryClass", "getFactory"));
 		
 		return $this->component;
 	}
 	
+	
 	/**
-	 * Tests component->getFactory()
 	 * @depends testSetFactory
 	 */
 	public function testGetFactory($component) {
 		$this->assertNotNull($component->getFactory());
 	}
 	
+	
 	/**
-	 * Tests component->hasFactory()
 	 * @depends testSetFactory
 	 */
 	public function testHasFactory($component) {
 		$this->assertTrue($component->hasFactory());
 	}
 	
-	/**
-	 * Tests component->setShared()
-	 */
+	
 	public function testSetShared() {
 		$this->component->setShared(true);
 		
@@ -180,7 +157,6 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * Tests component->isShared()
 	 * @depends testSetShared
 	 */
 	public function testIsShared($component) {
@@ -190,7 +166,5 @@ class Dispenser_Element_ComponentTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($component->isShared());
 	}
-	
-	
 
 }

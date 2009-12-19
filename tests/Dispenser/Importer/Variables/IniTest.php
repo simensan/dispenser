@@ -6,6 +6,7 @@ require_once 'PHPUnit\Framework\TestCase.php';
 
 /**
  * Dispenser_Importer_Variables_Ini test case.
+ * Huge difference in how php 5.3 and 5.2 handles errors in parse_ini_file. Currently tests work against 5.2. 
  */
 class Dispenser_Importer_Variables_IniTest extends PHPUnit_Framework_TestCase {
 	
@@ -17,6 +18,7 @@ class Dispenser_Importer_Variables_IniTest extends PHPUnit_Framework_TestCase {
 	public function __construct() {
 		Dispenser_Autoloader::register();
 	}
+	
 	
 	protected function setUp() {
 		$this->ini = new Dispenser_Importer_Variables_Ini();
@@ -46,17 +48,10 @@ class Dispenser_Importer_Variables_IniTest extends PHPUnit_Framework_TestCase {
 	
 	
 	/**
-	 * Tests ini->loadFromString()
+	 * @expectedException Dispenser_Exception
 	 */
-	public function testLoadFromString() {
-		if (function_exists("parse_ini_string") === false) {
-			return;
-		}
-		
-		$ini = file_get_contents("_files/ini/Legal.ini");
-		$this->ini->loadFromString($ini);
-		
-		return $this->ini;
+	public function testLoadMalformedIniDefinitionThrowsException() {
+		@$this->ini->loadFromFile("_files/ini/Malformed.ini");
 	}
 	
 	
@@ -73,7 +68,21 @@ class Dispenser_Importer_Variables_IniTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testLoadlIniDefinitionWithIllegalExtend() {
 		$this->ini->loadFromFile("_files/ini/IllegalExtend.ini");
-		
+	}
+	
+	/**
+	 * @expectedException Dispenser_Exception
+	 */
+	public function testLoadlIniDefinitionWithIllegalDoubleExtend() {
+		$this->ini->loadFromFile("_files/ini/DoubleExtend.ini");
+	}
+	
+	
+	/**
+	 * @expectedException Dispenser_Exception
+	 */
+	public function testLoadNonExistantFileThrowsException() {
+		$this->ini->loadFromFile("ThisIsntAExistantFile.ini");
 	}
 	
 	

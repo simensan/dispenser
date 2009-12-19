@@ -101,7 +101,7 @@ class Dispenser_BuilderTest extends PHPUnit_Framework_TestCase
     }
     
     
-    public function testRegisterMinimal() {
+    public function testRegister() {
     	$this->builder	->register("Test")
     					->setClass("MockClass");
     	
@@ -194,6 +194,14 @@ class Dispenser_BuilderTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertEquals(1, $mockComponent->getArgument());
 	}
+
+	
+	/**
+     * @expectedException Dispenser_Exception
+     */
+	public function testGetNonExistantComponentThrowsException() {
+		$mockComponent = $this->builder->getMock();
+	}
 	
 	
 	 /**
@@ -207,10 +215,20 @@ class Dispenser_BuilderTest extends PHPUnit_Framework_TestCase
     
 	
     /**
-     * @depends testRegisterMinimal
+     * @depends testRegister
      */
-    public function testGetComponentMinimal($builder) {
+    public function testGetComponent($builder) {
     	$test = $builder->getComponent("Test");
+    }
+    
+ 	/**
+     * @depends testRegisterWithReferenceArgument
+     */
+    public function testGetComponents($builder) {
+    	$components = $builder->getComponents();
+    	
+    	$this->assertType("array", $components);
+    	$this->assertEquals(2, count($components));
     }
     
     

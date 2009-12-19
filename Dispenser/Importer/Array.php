@@ -36,6 +36,17 @@
  */
 class Dispenser_Importer_Array implements Dispenser_Importer_Interface  {
 	
+	const DISPENSER_CLASS 		= "class";
+	const DISPENSER_SHARED 		= "shared";
+	const DISPENSER_ARGUMENTS	= "arguments";
+	const DISPENSER_METHOD		= "method";
+	const DISPENSER_METHODS		= "methods";
+	const DISPENSER_FACTORY		= "factory";
+	const DISPENSER_REFERENCE	= "reference";
+	const DISPENSER_VARIABLE	= "variable";
+	const DISPENSER_TYPE		= "type";
+	const DISPENSER_NAME		= "name";
+	
 	/**
 	 * Contains the imported components
 	 * @var array
@@ -105,34 +116,34 @@ class Dispenser_Importer_Array implements Dispenser_Importer_Interface  {
 				throw new Dispenser_Exception("Passed array is malformed, component definition is not an array.");
 			}
 		
-			if(isset($componentItem['class']) === false) {
+			if(isset($componentItem[self::DISPENSER_CLASS]) === false) {
 				throw new Dispenser_Exception("Class must be set in component definition.");
 			}
 			
 			$component = new Dispenser_Element_Component($id);
 						
-			$component->setClass($componentItem['class']);
+			$component->setClass($componentItem[self::DISPENSER_CLASS]);
 			
-			unset($componentItem['class']);
+			unset($componentItem[self::DISPENSER_CLASS]);
 			
-			if(isset($componentItem['shared'])) {
-				$component->setShared($componentItem['shared']);
-				unset($componentItem['shared']);
+			if(isset($componentItem[self::DISPENSER_SHARED])) {
+				$component->setShared($componentItem[self::DISPENSER_SHARED]);
+				unset($componentItem[self::DISPENSER_SHARED]);
 			}	
 					
-			if(isset($componentItem['factory'])) {
-				$component->setFactory($this->parseFactory($componentItem['factory']));
-				unset($componentItem['factory']);
+			if(isset($componentItem[self::DISPENSER_FACTORY])) {
+				$component->setFactory($this->parseFactory($componentItem[self::DISPENSER_FACTORY]));
+				unset($componentItem[self::DISPENSER_FACTORY]);
 			}
 			
-			if(isset($componentItem['methods'])) {
-				$component->addMethods($this->parseMethods($componentItem['methods']));
-				unset($componentItem['methods']);
+			if(isset($componentItem[self::DISPENSER_METHODS])) {
+				$component->addMethods($this->parseMethods($componentItem[self::DISPENSER_METHODS]));
+				unset($componentItem[self::DISPENSER_METHODS]);
 			}
 			
-			if(isset($componentItem['arguments'])) {
-				$component->addArguments($this->parseArguments($componentItem['arguments']));
-				unset($componentItem['arguments']);
+			if(isset($componentItem[self::DISPENSER_ARGUMENTS])) {
+				$component->addArguments($this->parseArguments($componentItem[self::DISPENSER_ARGUMENTS]));
+				unset($componentItem[self::DISPENSER_ARGUMENTS]);
 			}
 			
 			if(empty($componentItem) === false) {
@@ -157,8 +168,8 @@ class Dispenser_Importer_Array implements Dispenser_Importer_Interface  {
 	protected function parseFactory($factoryArray) {
 		$factory = new Dispenser_Element_Factory();
 				
-		$factory->setClass($factoryArray['class']);
-		$factory->setMethod($factoryArray['method']);
+		$factory->setClass($factoryArray[self::DISPENSER_CLASS]);
+		$factory->setMethod($factoryArray[self::DISPENSER_METHOD]);
 		
 		return $factory;
 	}
@@ -195,18 +206,20 @@ class Dispenser_Importer_Array implements Dispenser_Importer_Interface  {
 	protected function parseArguments($argumentsArray) {
 
 		$arguments = array();
-		
+		/*print ".";
+		var_dump($argumentsArray);
+		print ".";*/
 		foreach($argumentsArray as $argumentItem) {
-			if(is_array($argumentItem)) {
-				if($argumentItem['type'] === "reference") {
-					$argument = new Dispenser_Element_Reference($argumentItem['name']);
-				} else if($argumentItem['type'] === "variable") {
-					$argument = new Dispenser_Element_Variable($argumentItem['name']);
+			
+			if(is_array($argumentItem)&& isset($argumentItem[self::DISPENSER_TYPE]) === true) {
+				if($argumentItem[self::DISPENSER_TYPE] === self::DISPENSER_REFERENCE) {
+					$argument = new Dispenser_Element_Reference($argumentItem[self::DISPENSER_NAME]);
+				} else if($argumentItem[self::DISPENSER_TYPE] === self::DISPENSER_VARIABLE) {
+					$argument = new Dispenser_Element_Variable($argumentItem[self::DISPENSER_NAME]);
 				}  else {
-					throw new Dispenser_Exception("Unknown argument type '{$argumentItem['type']}");
+					throw new Dispenser_Exception("Unknown argument type '{$argumentItem[self::DISPENSER_TYPE]}");
 				}
 				
-				//$argument->setName($argumentItem['name']);
 				$arguments[] = $argument;
 			} else {
 				$arguments[] = $argumentItem;

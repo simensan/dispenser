@@ -96,10 +96,10 @@ class Dispenser_Importer_Variables_Ini implements Dispenser_Importer_Variables_I
 		if(file_exists($file) === false) {
 			throw new Dispenser_Exception("'$file' does not exist.");
 		}
-				
+		
 		$iniArray = parse_ini_file($file, true);
 		
-		if ($iniArray === false) {
+		if ($iniArray === false || empty($iniArray)) {
 			throw new Dispenser_Exception("Malformed ini file.");
 		}
 		
@@ -108,28 +108,6 @@ class Dispenser_Importer_Variables_Ini implements Dispenser_Importer_Variables_I
 		$this->parseIniArray($iniArray);
 	}
 
-	
-	/**
-	* Load ini variables from string
-	*
-	* @param string $file String to load ini settings from
-	* @param string $section Section to load settigns from (Optional) 
-	*/
-	public function loadFromString($iniString, $section = null) {
-		if (function_exists("parse_ini_string") === false) {
-			throw new Dispenser_Exception("This function requires php >= 5.3");
-		}
-		
-		$iniArray = parse_ini_string($iniString, true);
-		
-		if ($iniArray === false) {
-			throw new Dispenser_Exception("Malformed ini string.");
-		}
-		
-		$this->section = $section;
-		
-		$this->parseIniArray($iniArray);
-	}
 	
 	/**
 	* Parse the sections of ini array. Handle extended sections. 
