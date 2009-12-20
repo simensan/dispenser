@@ -102,7 +102,8 @@ $defs = array(
 		'class' => 'Test',
 		'shared' => true,
 		'arguments' => array(
-			'blah'
+			'blah',
+			array(0=>"1",1=>"2")
 		),
 		'methods' => array(
 			'setSomeShit' => array(
@@ -207,3 +208,12 @@ $xmlBuilder = new Dispenser_Builder();
 $xmlBuilder->load($xmlImporter);
 $xmlBuilder->setVariable("test.config", "test");
 $xmlBuilder->getTest();
+
+
+$arrayExporter = new Dispenser_Exporter_Array();
+$arrayExporter->load($dispenser2);
+eval('$arr = ' . $arrayExporter->export() . ";");
+
+$dispenser2 	= new Dispenser_Builder();
+$arrayLoader 	= new Dispenser_Importer_Array($arr);
+$dispenser2->load($arrayLoader);

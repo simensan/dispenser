@@ -29,6 +29,7 @@
 * @license MIT License
 */
 
+
 /**
  * Representation of a method to be called at object instantiation. 
  *

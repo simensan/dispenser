@@ -32,7 +32,7 @@
 /**
  * Exports a Dispenser_Builder to raw php. Resulting class extends @see Dispenser_Builder. 
  * References / hardcoded arguments are exported, elements of type Dispenser_Element_Variable are not,
- * so you must load variables into the exporter class too if you use them. 
+ * so you must load variables into the exported class too if you use them. 
  */
 class Dispenser_Exporter_Native implements Dispenser_Exporter_Interface {
 	

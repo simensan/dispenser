@@ -45,7 +45,10 @@ class BuiltDI extends Dispenser_Builder {
 	*/ 
 	public function getTest() { 
 		if($this->Test == null) { 
-			$instance = new Test('blah');
+			$instance = new Test('blah', array (
+  0 => '1',
+  1 => '2',
+));
 			$instance->setSomeShit($this->getRefClass()); 
 			$instance->setSomeOtherShit($this->getVariable("test.config")); 
 			$this->Test = $instance;
