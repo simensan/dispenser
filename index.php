@@ -127,6 +127,7 @@ $arrayLoader 	= new Dispenser_Importer_Array($defs);
 $dispenser2->load($arrayLoader);
 var_dump($dispenser2->getComponents());
 
+
 $exporter = new Dispenser_Exporter_Native();
 $exporter->setClassName("BuiltDI");
 $exporter->load($dispenser2);
@@ -137,3 +138,32 @@ require_once "BuiltDI.php";
 $wrapped = new BuiltDI();
 $wrapped->setVariable('test.config', 'TEST.CONFIG');
 $wrapped->getTest();
+
+
+$xml = <<<XML
+<variables>
+
+	<variable key="test.key" value="wut" />
+	
+	<production>
+		<variable key="test.key" value="production" />
+		<variable key="extended.key" value="production" />
+	</production>
+	
+	<testing extends="production">
+		<variable key="test.key" value="testing" />
+	</testing>
+	
+</variables>
+XML;
+
+$xmlImporter = new Dispenser_Importer_Variables_Xml();
+$xmlImporter->loadFromString($xml);
+
+var_dump($xmlImporter->getVariables());
+
+$xmlImporter->setSection("production");
+var_dump($xmlImporter->getVariables());
+
+$xmlImporter->setSection("testing");
+var_dump($xmlImporter->getVariables());

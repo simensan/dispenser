@@ -31,7 +31,7 @@
 
 
 /**
- * Loads variables from an array. 
+ * Loads variables from a ini file. 
  *
  */
 class Dispenser_Importer_Variables_Ini implements Dispenser_Importer_Variables_Interface {
