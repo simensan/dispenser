@@ -157,13 +157,54 @@ $xml = <<<XML
 </variables>
 XML;
 
-$xmlImporter = new Dispenser_Importer_Variables_Xml();
+$xmlVariablesImporter = new Dispenser_Importer_Variables_Xml();
+$xmlVariablesImporter->loadFromString($xml);
+
+var_dump($xmlVariablesImporter->getVariables());
+
+$xmlVariablesImporter->setSection("production");
+var_dump($xmlVariablesImporter->getVariables());
+
+$xmlVariablesImporter->setSection("testing");
+var_dump($xmlVariablesImporter->getVariables());
+
+
+$xml = <<<XML
+<components>
+
+	<component id="Renderer" class="FactoryReturnedClass">
+		<factory class="FactoryClass" method="getFactory" />
+		<arguments>
+			<argument>viewRenderer</argument>
+		</arguments>
+	</component>
+	
+	<component id="Test" class="Test" shared="true">
+		<methods>
+			<method name="setSomeShit">
+				<arguments>
+					<argument type="reference">Renderer</argument>
+					<argument type="variable">test.config</argument>
+				</arguments>
+			</method>
+			<method name="setSomeOtherShit">
+				<arguments>
+					<argument type="variable">test.config</argument>
+				</arguments>
+			</method>
+		</methods>
+		<arguments>
+			<argument>blah</argument>
+		</arguments>
+	</component>
+</components>
+XML;
+
+$xmlImporter = new Dispenser_Importer_Xml();
 $xmlImporter->loadFromString($xml);
+$components = $xmlImporter->getComponents();
 
-var_dump($xmlImporter->getVariables());
-
-$xmlImporter->setSection("production");
-var_dump($xmlImporter->getVariables());
-
-$xmlImporter->setSection("testing");
-var_dump($xmlImporter->getVariables());
+$xmlBuilder = new Dispenser_Builder();
+$xmlBuilder->load($xmlImporter);
+$xmlBuilder->setVariable("test.config", "test");
+$xmlBuilder->getTest();

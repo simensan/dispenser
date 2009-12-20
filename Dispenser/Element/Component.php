@@ -237,13 +237,14 @@ class Dispenser_Element_Component {
 	
 	
 	/**
-	* Sets whether the instance of the component is shared or not. If set to false a new instance is returned each getComponent call. 
+	* Sets whether the instance of the component is shared or not.
+	*  If set to false a new instance is returned each getComponent call. 
 	*
 	* @param boolean $shared
 	* @return Dispenser_Element_Component
 	*/
 	public function setShared($shared) {
-		$this->shared = $shared;
+		$this->shared = (boolean)$shared;
 		
 		return $this;
 	}

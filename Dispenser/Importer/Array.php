@@ -198,7 +198,7 @@ class Dispenser_Importer_Array implements Dispenser_Importer_Interface  {
 	}
 	
 	/**
-	* Parses an array of method definitions
+	* Parses an array of arguments.
 	*
 	* @param array $argumentsArray Array of argument definitions
 	* @return array

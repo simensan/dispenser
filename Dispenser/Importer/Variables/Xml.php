@@ -141,7 +141,8 @@ class Dispenser_Importer_Variables_Xml implements Dispenser_Importer_Variables_I
 	
 	
 	/**
-	* Internal function used to load XML from file/string. Called by @see loadFromString and @see loadFromFile
+	* Internal function used to load XML from file/string. 
+	* Called by @see loadFromString and @see loadFromFile
 	*
 	* @param string $obj Either filename of the XML file or a XML string. 
 	* @param boolean $isFromFile True if loading from file, false if from string. 
@@ -173,7 +174,7 @@ class Dispenser_Importer_Variables_Xml implements Dispenser_Importer_Variables_I
 	/**
 	* Parse the xml SimpleXMLElement object.  
 	*
-	* @param SimpleXMLElement $xml SimpleXMLElement of loaded xml file. 
+	* @param SimpleXMLElement $xml SimpleXMLElement of loaded xml. 
 	*/
 	protected function parseXml($xml) {
 	   	$nodes = $xml->children();
