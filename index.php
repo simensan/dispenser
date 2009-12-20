@@ -202,7 +202,6 @@ XML;
 
 $xmlImporter = new Dispenser_Importer_Xml();
 $xmlImporter->loadFromString($xml);
-$components = $xmlImporter->getComponents();
 
 $xmlBuilder = new Dispenser_Builder();
 $xmlBuilder->load($xmlImporter);

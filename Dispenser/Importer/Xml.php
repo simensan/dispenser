@@ -139,8 +139,7 @@ class Dispenser_Importer_Xml implements Dispenser_Importer_Interface  {
 		
 		foreach($nodes as $node) {
 			if($node->getName() == self::DISPENSER_COMPONENT) {
-				$component = $this->parseComponent($node);
-				
+				$this->parseComponent($node);
       		}
 		}
 	}
@@ -150,7 +149,6 @@ class Dispenser_Importer_Xml implements Dispenser_Importer_Interface  {
 	* Parses a xml component node.
 	*
 	* @param  SimpleXMLElement $componentNode
-	* @return Dispenser_Element_Component
 	*/
 	protected function parseComponent($componentNode) {
 		if(isset($componentNode[self::DISPENSER_ID]) === false) {

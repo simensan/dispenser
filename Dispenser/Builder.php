@@ -168,7 +168,7 @@ class Dispenser_Builder {
 	* @return object
 	*/	
     public function getComponent($componentId) {
-    	var_dump($componentId);
+
     	if(isset($this->components[$componentId]) === false) {
     		throw new Dispenser_Exception("Component '$componentId' does not exist.");
     	}
