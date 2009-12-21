@@ -13,12 +13,16 @@ of what is lacking. Feel free to give feedback.
 
 You can define/import wiring via:
 * Programatically
+
 * Array
+
 * XML
+
 * Yadif array
 	
 You can export to:
 * Array
+
 * Native php code 	
 	
 ## Examples
