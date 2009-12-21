@@ -1,0 +1,31 @@
+## Dispenser : A php dependency injection library
+
+## Intro
+
+What I missed with most php dependency injection libaries was auto-completion
+hence I took the long route and made my own which can export DI wiring to native php code.
+Set the build in a ant task and it's easypeasy. 
+
+## Progress
+So far the basic stuff work. Theres various importers and exporters. More features are in the works.
+I have yet to use it in a real project, but I plan to near future. When I do I will get a better feeling
+of what is lacking. Feel free to give feedback. 
+
+You can define/import wiring via:
+* Programatically
+* Array
+* XML
+* Yadif array
+	
+You can export to:
+* Array
+* Native php code 	
+	
+## Examples
+There are various examples in the examples.php file, it's rough and ugly.
+I am in the works of making a proper example documentation, and will be out soon.
+
+## Tests
+I have tried to be a good boy on writing tests, there's decent coverage. I still lack
+tests on some of the newer features, importers/exporters. 
+
